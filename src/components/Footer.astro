@@ -32,54 +32,13 @@ const links = [
 </footer>
 
 <style>
-  .site-footer {
-    border-top: 1px solid transparent;
-    margin-top: 4rem;
-    padding: 3rem 0 2.5rem;
-    background: var(--color-surface);
-    position: relative;
-  }
-  .site-footer::before {
-    content: '';
-    position: absolute;
-    left: 0;
-    right: 0;
-    top: 0;
-    height: 1px;
-    background: linear-gradient(90deg, transparent 8%,
-      color-mix(in srgb, var(--color-holo) 38%, transparent) 50%,
-      transparent 92%);
-  }
-  .footer-inner {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    text-align: center;
-    gap: 1rem;
-  }
-  .footer-brand-name {
-    font-family: var(--font-display);
-    font-weight: 700;
-    font-size: 1.1rem;
-    color: var(--color-text);
-  }
-  .footer-mark { width: 26px; height: 26px; filter: drop-shadow(0 0 8px var(--logo-glow)); }
-
-  .footer-nav {
-    display: flex;
-    flex-wrap: wrap;
-    align-items: center;
-    justify-content: center;
-    gap: 0.5rem;
-    font-size: 0.92rem;
-  }
-  .footer-nav a { color: var(--color-text-secondary); font-weight: 500; }
+  .site-footer { border-top: 1px solid var(--color-border); padding: 2.5rem 0; }
+  .footer-inner { display: flex; align-items: center; flex-wrap: wrap; justify-content: space-between; gap: 1.5rem; }
+  .footer-brand-name { font-size: 1rem; font-weight: 600; letter-spacing: -.04em; }
+  .footer-mark { width: 26px; height: 26px; }
+  .footer-nav { display: flex; flex-wrap: wrap; align-items: center; gap: .8rem; font-size: .78rem; }
+  .footer-nav a { color: var(--color-text-secondary); }
   .footer-nav a:hover { color: var(--color-accent); }
-  .footer-sep { color: var(--color-border); }
-
-  .footer-copy {
-    margin: 0;
-    font-size: 0.8rem;
-    color: var(--color-text-tertiary);
-  }
+  .footer-sep { color: #a9afa4; }
+  .footer-copy { width: 100%; margin: 0; font-size: .7rem; color: var(--color-text-tertiary); }
 </style>

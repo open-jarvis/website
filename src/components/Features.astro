@@ -1,43 +1,57 @@
 ---
 import { getCollection } from 'astro:content';
 import Section from './Section.astro';
-import FeatureCard from './FeatureCard.astro';
-
 const items = (await getCollection('features')).sort((a, b) => a.data.order - b.data.order);
-
-// Map each primitive (by order) to its icon glyph in FeatureCard.
-const iconByOrder: Record<number, string> = {
-  1: 'intelligence',
-  2: 'engine',
-  3: 'agents',
-  4: 'tools',
-  5: 'learning',
-};
+const paths = [
+  '<path d="m12 3 2.5 6.5L21 12l-6.5 2.5L12 21l-2.5-6.5L3 12l6.5-2.5z"/>',
+  '<rect x="6" y="6" width="12" height="12" rx="2"/><path d="M9 2v4m6-4v4M9 18v4m6-4v4M2 9h4m-4 6h4m12-6h4m-4 6h4"/>',
+  '<circle cx="5" cy="12" r="3"/><circle cx="19" cy="5" r="3"/><circle cx="19" cy="19" r="3"/><path d="m8 10 8-4m-8 8 8 4"/>',
+  '<rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><path d="M17.5 14v7M14 17.5h7"/>',
+  '<path d="m3 17 6-6 4 4 8-10m-6 0h6v6"/>',
+];
 ---
-
-<Section id="features" title="Five primitives for personal AI" index={2}>
-  <div class="grid">
-    {items.map((f, i) => (
-      <FeatureCard
-        title={f.data.title}
-        summary={f.data.summary}
-        icon={iconByOrder[f.data.order] ?? 'intelligence'}
-        size={i < 2 ? 'lg' : 'md'}
-      />
-    ))}
+<Section id="features" title="Five primitives for personal AI">
+  <div class="framework">
+    <div class="primitive-tabs" role="tablist" aria-label="Explore the five primitives">
+      {items.map((item, i) => <button id={`primitive-tab-${i}`} data-primitive={i} role="tab" aria-controls={`primitive-panel-${i}`} aria-selected={i === 0 ? 'true' : 'false'} tabindex={i === 0 ? 0 : -1}><span class="primitive-step" aria-hidden="true">0{i + 1}</span><svg width="27" height="27" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.35" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" set:html={paths[i]}/><span class="primitive-title">{item.data.title}</span></button>)}
+    </div>
+    {items.map((item, i) => <div id={`primitive-panel-${i}`} role="tabpanel" aria-labelledby={`primitive-tab-${i}`} tabindex="0" class="primitive-panel" hidden={i !== 0}>
+      <div class="primitive-copy"><h3>{item.data.title}</h3><p>{item.data.summary}</p></div>
+    </div>)}
   </div>
 </Section>
-
+<script>
+  const tabs = Array.from(document.querySelectorAll<HTMLButtonElement>('[data-primitive]'));
+  function activate(tab: HTMLButtonElement) {
+    tabs.forEach(t => { const on = t === tab; t.setAttribute('aria-selected', String(on)); t.tabIndex = on ? 0 : -1; });
+    document.querySelectorAll<HTMLElement>('.primitive-panel').forEach(panel => { panel.hidden = panel.id !== `primitive-panel-${tab.dataset.primitive}`; });
+  }
+  tabs.forEach((tab, i) => {
+    tab.addEventListener('click', () => activate(tab));
+    tab.addEventListener('keydown', event => {
+      let next = i;
+      if (event.key === 'ArrowRight') next = (i + 1) % tabs.length;
+      else if (event.key === 'ArrowLeft') next = (i + tabs.length - 1) % tabs.length;
+      else if (event.key === 'Home') next = 0;
+      else if (event.key === 'End') next = tabs.length - 1;
+      else return;
+      event.preventDefault(); activate(tabs[next]); tabs[next].focus();
+    });
+  });
+</script>
 <style>
-  /* Bento: two wide cards on the first row, three narrower ones on the second.
-     Column spans live on the cards themselves (see FeatureCard.astro). */
-  .grid {
-    display: grid;
-    grid-template-columns: repeat(6, minmax(0, 1fr));
-    gap: 1.25rem;
-  }
-
-  @media (max-width: 1000px) and (min-width: 761px) {
-    .grid { grid-template-columns: repeat(4, minmax(0, 1fr)); }
-  }
+  .framework { border: 1px solid #dce4ee; border-radius: 10px; overflow: hidden; }
+  .primitive-tabs { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); background: #fff; }
+  .primitive-tabs button { position: relative; display: flex; flex-direction: column; align-items: start; gap: 20px; padding: 20px 24px 24px; background: transparent; border: 0; border-bottom: 2px solid transparent; color: #64758e; text-align: left; cursor: pointer; }
+  .primitive-tabs button + button { border-left: 1px solid #e6ebf2; }
+  .primitive-tabs button:hover { background: #fafbfe; }
+  .primitive-tabs button[aria-selected='true'] { background: #eff5fe; color: #315f9d; border-bottom-color: #315f9d; }
+  .primitive-step { display: flex; justify-content: space-between; width: 100%; font-family: var(--font-mono); font-size: .6rem; color: #6b7f99; }
+  .primitive-title { font-size: .94rem; font-weight: 500; letter-spacing: -.02em; color: #344b69; }
+  .primitive-panel { border-top: 1px solid #dce4ee; background: #f8fafd; }
+  .primitive-copy { padding: 34px; }
+  .primitive-copy h3 { font-size: 1.2rem; letter-spacing: -.03em; margin-bottom: 14px; }
+  .primitive-copy p { font-size: .9rem; line-height: 1.8; max-width: 72ch; margin: 0; }
+  @media (max-width: 900px) { .primitive-tabs button { padding-inline: 17px; } .primitive-title { font-size: .8rem; } }
+  @media (max-width: 600px) { .primitive-tabs { overflow-x: auto; grid-template-columns: repeat(5, 133px); } .primitive-tabs button { gap: 16px; } .primitive-copy { padding: 25px; } }
 </style>

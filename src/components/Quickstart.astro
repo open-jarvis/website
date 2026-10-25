@@ -1,363 +1,91 @@
 ---
-import Section from './Section.astro';
 import { site } from '../config/site';
+const steps = [
+  { id: 'install', label: 'Install', number: '01', code: ['# One command — installs everything for your hardware', site.install], copy: site.install },
+  { id: 'ask', label: 'Ask', number: '02', code: ['# One-time setup & local model pull', 'jarvis init', 'jarvis ask "what\'s on my calendar today?"', '→ answered locally on your GPU · 0 cloud calls · 1.2s'], copy: 'jarvis init\njarvis ask "what\'s on my calendar today?"' },
+  { id: 'serve', label: 'Serve', number: '03', code: ['# Expose an OpenAI-compatible API', 'jarvis serve', '→ live at http://localhost:8000'], copy: 'jarvis serve' },
+];
 ---
-
-<Section id="quickstart" title="Quick Start" index={1}>
-  <div class="qs-layout">
-    <div class="qs-console">
-      <div class="code-block">
-        <div class="code-header">
-          <span class="dot dot-red"></span>
-          <span class="dot dot-yellow"></span>
-          <span class="dot dot-green"></span>
-          <div class="mode-switch" role="tablist" aria-label="Quickstart steps">
-            <button class="mode-btn active" data-mode="install" role="tab" aria-selected="true">Install</button>
-            <button class="mode-btn" data-mode="ask" role="tab" aria-selected="false">Ask</button>
-            <button class="mode-btn" data-mode="serve" role="tab" aria-selected="false">Serve</button>
-          </div>
-        </div>
-
-        <div class="code-body">
-          <!-- Install -->
-          <div class="code-content" data-content="install">
-            <div class="code-line comment"># One command — installs everything for your hardware</div>
-            <div class="code-line cmd">
-              <span class="prompt">$</span>
-              <span class="ctext">{site.install}</span>
-              <button class="copy-line" data-copy={site.install} aria-label="Copy command">
-                <svg class="ic-copy" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
-                <svg class="ic-check" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"></polyline></svg>
-                <span class="copy-label">Copy</span>
-              </button>
-            </div>
-            <div class="code-line" aria-hidden="true"><span class="prompt">$</span> <span class="caret"></span></div>
-          </div>
-
-          <!-- Ask -->
-          <div class="code-content" data-content="ask" hidden>
-            <div class="code-line comment"># One-time setup &amp; local model pull</div>
-            <div class="code-line cmd">
-              <span class="prompt">$</span>
-              <span class="ctext">jarvis init</span>
-              <button class="copy-line" data-copy="jarvis init" aria-label="Copy command">
-                <svg class="ic-copy" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
-                <svg class="ic-check" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"></polyline></svg>
-                <span class="copy-label">Copy</span>
-              </button>
-            </div>
-            <div class="code-line cmd">
-              <span class="prompt">$</span>
-              <span class="ctext">jarvis ask <span class="arg">"what's on my calendar today?"</span></span>
-              <button class="copy-line" data-copy={'jarvis ask "what\'s on my calendar today?"'} aria-label="Copy command">
-                <svg class="ic-copy" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
-                <svg class="ic-check" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"></polyline></svg>
-                <span class="copy-label">Copy</span>
-              </button>
-            </div>
-            <div class="code-line out">&rarr; answered locally on your GPU · 0 cloud calls · 1.2s</div>
-            <div class="code-line" aria-hidden="true"><span class="prompt">$</span> <span class="caret"></span></div>
-          </div>
-
-          <!-- Serve -->
-          <div class="code-content" data-content="serve" hidden>
-            <div class="code-line comment"># Expose an OpenAI-compatible API</div>
-            <div class="code-line cmd">
-              <span class="prompt">$</span>
-              <span class="ctext">jarvis serve</span>
-              <button class="copy-line" data-copy="jarvis serve" aria-label="Copy command">
-                <svg class="ic-copy" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
-                <svg class="ic-check" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"></polyline></svg>
-                <span class="copy-label">Copy</span>
-              </button>
-            </div>
-            <div class="code-line out">&rarr; live at http://localhost:8000</div>
-            <div class="code-line" aria-hidden="true"><span class="prompt">$</span> <span class="caret"></span></div>
-          </div>
-        </div>
+<section id="quickstart" class="quickstart">
+  <div class="container">
+    <div class="walkthrough">
+      <div class="walkthrough-top"><h2>Quick Start</h2><a href={site.links.docs} target="_blank" rel="noopener noreferrer">Read the full docs <span aria-hidden="true">↗</span></a></div>
+      <div class="walkthrough-tabs" role="tablist" aria-label="Quickstart steps">
+        {steps.map((step, i) => <button id={`qs-tab-${step.id}`} role="tab" aria-controls={`qs-panel-${step.id}`} aria-selected={i === 0 ? 'true' : 'false'} tabindex={i === 0 ? 0 : -1} data-step={step.id}><span>{step.number}</span>{step.label}<span class="step-arrow" aria-hidden="true">→</span></button>)}
       </div>
+      {steps.map((step, i) => <div id={`qs-panel-${step.id}`} class="walkthrough-panel" role="tabpanel" aria-labelledby={`qs-tab-${step.id}`} tabindex="0" hidden={i !== 0}>
+        <div class="walkthrough-explanation"><p>Runs entirely on your hardware — cloud APIs are optional. Browse and pull local models any time with <code>jarvis model</code>.</p></div>
+        <div class="code-example"><div class="code-title"><span>terminal</span><button data-copy={step.copy} aria-label={`Copy ${step.label.toLowerCase()} commands`}><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><rect x="8" y="8" width="13" height="13" rx="2"/><path d="M16 8V3H3v13h5"/></svg><span class="copy-label">Copy</span></button></div><pre><code>{step.code.map((line, lineIndex) => <span class:list={['code-line', line.startsWith('#') && 'comment']}><span class="line-number" aria-hidden="true">{lineIndex + 1}</span><span>{line || ' '}</span></span>)}</code></pre></div>
+      </div>)}
     </div>
-
-    <p class="qs-note">
-      Runs entirely on your hardware — cloud APIs are optional. Browse and pull local models any time
-      with <code>jarvis model</code>.
-      <a href={site.links.docs} target="_blank" rel="noopener noreferrer">Read the full docs &rarr;</a>
-    </p>
   </div>
-</Section>
-
+</section>
 <script>
   import { copyText } from '../lib/clipboard';
-
   const root = document.getElementById('quickstart');
-  if (root) {
-    const tabs = root.querySelectorAll<HTMLButtonElement>('.mode-btn');
-    const panels = root.querySelectorAll<HTMLElement>('.code-content');
-    tabs.forEach((tab) => {
-      tab.addEventListener('click', () => {
-        const mode = tab.dataset.mode;
-        tabs.forEach((t) => {
-          const on = t === tab;
-          t.classList.toggle('active', on);
-          t.setAttribute('aria-selected', String(on));
-        });
-        panels.forEach((p) => { p.hidden = p.dataset.content !== mode; });
-      });
-    });
-
-    root.querySelectorAll<HTMLButtonElement>('.copy-line').forEach((btn) => {
-      btn.addEventListener('click', async () => {
-        const ok = await copyText(btn.dataset.copy ?? '');
-        if (!ok) return;
-        const label = btn.querySelector<HTMLElement>('.copy-label');
-        btn.classList.add('copied');
-        if (label) label.textContent = 'Copied!';
-        setTimeout(() => {
-          btn.classList.remove('copied');
-          if (label) label.textContent = 'Copy';
-        }, 1400);
-      });
-    });
+  const tabs = Array.from(root?.querySelectorAll<HTMLButtonElement>('[data-step]') ?? []);
+  function activate(tab: HTMLButtonElement) {
+    tabs.forEach(t => { const active = t === tab; t.setAttribute('aria-selected', String(active)); t.tabIndex = active ? 0 : -1; });
+    root?.querySelectorAll<HTMLElement>('.walkthrough-panel').forEach(panel => { panel.hidden = panel.id !== `qs-panel-${tab.dataset.step}`; });
   }
+  tabs.forEach((tab, i) => {
+    tab.addEventListener('click', () => activate(tab));
+    tab.addEventListener('keydown', event => {
+      let next = i;
+      if (event.key === 'ArrowRight') next = (i + 1) % tabs.length;
+      else if (event.key === 'ArrowLeft') next = (i + tabs.length - 1) % tabs.length;
+      else if (event.key === 'Home') next = 0;
+      else if (event.key === 'End') next = tabs.length - 1;
+      else return;
+      event.preventDefault(); activate(tabs[next]); tabs[next].focus();
+    });
+  });
+  root?.querySelectorAll<HTMLButtonElement>('[data-copy]').forEach(button => {
+    button.addEventListener('click', async () => {
+      if (!await copyText(button.dataset.copy ?? '')) return;
+      const label = button.querySelector('.copy-label');
+      if (label) { label.textContent = 'Copied'; setTimeout(() => label.textContent = 'Copy', 1600); }
+    });
+  });
 </script>
-
 <style>
-  /* Note on the left, console on the right */
-  .qs-layout {
-    display: grid;
-    grid-template-columns: minmax(0, 0.78fr) minmax(0, 1.62fr);
-    gap: clamp(1.5rem, 4vw, 3rem);
-    align-items: start;
+  .quickstart { padding: 4px 0 70px; scroll-margin-top: 90px; }
+  .walkthrough { border: 1px solid #d8e1ef; border-radius: 12px; overflow: hidden; background: #fff; box-shadow: 0 12px 40px -28px #274b7833; }
+  .walkthrough-top { padding: 22px 28px; display: flex; align-items: center; justify-content: space-between; gap: 20px; }
+  .walkthrough-top h2 { font-size: 1.03rem; font-weight: 500; margin: 0; letter-spacing: -.02em; }
+  .walkthrough-top a { font-size: .75rem; white-space: nowrap; }
+  .walkthrough-tabs { display: grid; grid-template-columns: repeat(3, 1fr); border-block: 1px solid var(--color-border); background: #f8fafd; }
+  .walkthrough-tabs button { display: flex; align-items: center; gap: 14px; border: 0; border-bottom: 2px solid transparent; padding: 15px 28px; background: transparent; text-align: left; color: #6d7b90; font-size: .86rem; cursor: pointer; }
+  .walkthrough-tabs button + button { border-left: 1px solid var(--color-border); }
+  .walkthrough-tabs button > span:first-child { font-family: var(--font-mono); font-size: .67rem; opacity: .7; }
+  .walkthrough-tabs button[aria-selected='true'] { background: #edf3fc; color: #315f9d; border-bottom-color: #315f9d; }
+  .step-arrow { margin-left: auto; opacity: .7; }
+  .walkthrough-panel { display: grid; grid-template-columns: .85fr 1.6fr; min-height: 220px; }
+  .walkthrough-explanation { padding: 30px 28px; }
+  .walkthrough-explanation h3 { font-size: 1.08rem; font-weight: 600; margin-bottom: 12px; }
+  .walkthrough-explanation p { font-size: .86rem; line-height: 1.75; margin-bottom: 20px; }
+  .step-note { font-size: .7rem; color: #667d69; }
+  .step-note > span { margin-right: 4px; }
+  .code-example { border-left: 1px solid var(--color-border); background: #f6f8fc; min-width: 0; }
+  .code-title { display: flex; align-items: center; justify-content: space-between; padding: 14px 22px; font-family: var(--font-mono); font-size: .66rem; color: #7e8ba0; }
+  .code-title button { display: flex; align-items: center; gap: 6px; padding: 5px 8px; border: 1px solid #d6dfec; border-radius: 4px; background: #fff; font-size: .67rem; color: #58708f; cursor: pointer; }
+  .code-title button:hover { border-color: var(--color-accent); }
+  pre { background: transparent; margin: 0; padding: 9px 24px 25px; border: 0; font-size: .8rem; line-height: 2; color: #2b507f; }
+  pre code { font-size: inherit; }
+  .code-line { display: flex; gap: 22px; white-space: pre; }
+  .line-number { min-width: 10px; flex-shrink: 0; color: #b0bbcb; user-select: none; font-size: .7rem; }
+  .code-line.comment { color: #74856c; }
+  @media (max-width: 760px) {
+    .quickstart { padding-bottom: 48px; }
+    .walkthrough-top { padding: 18px; align-items: start; }
+    .walkthrough-top h2 { font-size: .9rem; max-width: 25ch; line-height: 1.5; }
+    .walkthrough-top a { font-size: .65rem; padding-top: 3px; }
+    .walkthrough-tabs button { padding: 13px 18px; gap: 9px; font-size: .8rem; }
+    .walkthrough-panel { grid-template-columns: 1fr; }
+    .walkthrough-explanation { padding: 24px; }
+    .walkthrough-explanation p { margin-bottom: 12px; }
+    .code-example { border-left: 0; border-top: 1px solid var(--color-border); }
+    pre { font-size: .72rem; }
   }
-  .qs-console { grid-area: 1 / 2; }
-  .qs-note { grid-area: 1 / 1; }
-
-  /* HUD frame ticks, drawn outside the console border */
-  .qs-console { position: relative; }
-  .qs-console::before,
-  .qs-console::after {
-    content: '';
-    position: absolute;
-    width: 14px;
-    height: 14px;
-    border: 1px solid color-mix(in srgb, var(--color-holo) 55%, transparent);
-  }
-  .qs-console::before {
-    top: -7px;
-    left: -7px;
-    border-right: 0;
-    border-bottom: 0;
-  }
-  .qs-console::after {
-    right: -7px;
-    bottom: -7px;
-    border-left: 0;
-    border-top: 0;
-  }
-
-  /* HUD console — always dark, thin powered border + holographic readout */
-  .code-block {
-    width: 100%;
-    min-width: 0;
-    border: 1px solid color-mix(in srgb, var(--color-holo) 42%, var(--color-border));
-    border-radius: var(--radius-lg);
-    background:
-      radial-gradient(80% 60% at 0% 0%, rgba(102, 217, 237, 0.07), transparent 50%),
-      #060924;
-    overflow: hidden;
-    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.38),
-                0 0 0 1px color-mix(in srgb, var(--color-holo) 10%, transparent),
-                0 0 34px color-mix(in srgb, var(--color-holo) 10%, transparent);
-  }
-
-  .code-header {
-    display: flex;
-    align-items: center;
-    gap: 1rem;
-    padding: 0.75rem 1rem;
-    border-bottom: 1px solid color-mix(in srgb, var(--color-holo) 18%, #11163c);
-    background: rgba(33, 80, 166, 0.08);
-  }
-  .dot { width: 12px; height: 12px; border-radius: 50%; flex-shrink: 0; }
-  .dot-red { background: #2150a6; opacity: 0.5; }
-  .dot-yellow { background: #4a83c9; opacity: 0.7; }
-  .dot-green { background: #66d9ed; box-shadow: 0 0 8px rgba(102, 217, 237, 0.55); }
-
-  .mode-switch {
-    display: flex;
-    gap: 0.25rem;
-    margin-left: auto;
-    flex-wrap: wrap;
-  }
-  .mode-btn {
-    padding: 0.3em 0.8em;
-    border: 1px solid transparent;
-    border-radius: 999px;
-    background: transparent;
-    color: #7d8b9c;
-    font-family: var(--font-sans);
-    font-size: 0.82rem;
-    font-weight: 600;
-    cursor: pointer;
-    transition: color 0.15s ease, background 0.15s ease, border-color 0.15s ease;
-  }
-  .mode-btn:hover { color: #b9c6d6; }
-  .mode-btn.active {
-    color: #66d9ed;
-    background: rgba(102, 217, 237, 0.1);
-    border-color: rgba(102, 217, 237, 0.38);
-  }
-
-  .code-body {
-    max-width: 100%;
-    padding: 1.1rem 1.25rem 1.25rem;
-    font-family: var(--font-mono);
-    font-size: 0.88rem;
-    line-height: 1.85;
-    overflow: hidden;
-  }
-  .code-line {
-    min-width: 0;
-    white-space: pre;
-    display: flex;
-    align-items: center;
-    gap: 0.55ch;
-  }
-  /* Back-to-back commands would sit the two 40px buttons edge to edge */
-  .code-line.cmd + .code-line.cmd { margin-top: 0.4rem; }
-
-  /* Every line clips and scrolls its own overflow, so nothing can spill past
-     the copy button or out of the console. */
-  .ctext,
-  .code-line.comment,
-  .code-line.out {
-    overflow-x: auto;
-    overflow-y: hidden;
-    scrollbar-width: none;
-  }
-  .ctext::-webkit-scrollbar,
-  .code-line.comment::-webkit-scrollbar,
-  .code-line.out::-webkit-scrollbar { display: none; }
-  /* Trailing room matches the fade width, so scrolling to the end brings the
-     tail of the command clear of the gradient instead of parking it underneath */
-  .ctext { flex: 1 1 auto; min-width: 0; padding-right: 3rem; }
-  /* Breathing room so overflow clipping doesn't cut the readout glow */
-  .code-line.out { padding-block: 0.5rem; margin-block: -0.5rem; }
-
-  .code-line.comment { color: #7180aa; }
-  .code-line.out {
-    color: #66d9ed;
-    letter-spacing: 0.015em;
-    text-shadow: 0 0 12px rgba(102, 217, 237, 0.28);
-  }
-  .code-line.out::before {
-    content: '';
-    width: 5px;
-    height: 5px;
-    margin-right: 0.35rem;
-    border-radius: 50%;
-    background: #66d9ed;
-    box-shadow: 0 0 9px rgba(102, 217, 237, 0.7);
-    flex: 0 0 auto;
-  }
-  .prompt { color: #66d9ed; }
-  .ctext { color: #f5f8ff; }
-  .arg { color: #91aee8; }
-
-  /* Holds the right end of the line; the command scrolls in the space left of
-     it, so the button can never be pushed out of the console. */
-  .copy-line {
-    position: relative;
-    z-index: 2;
-    margin-left: auto;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    gap: 0.5rem;
-    height: 40px;
-    padding: 0 1.1rem;
-    border: 1px solid #1f2c3d;
-    border-radius: var(--radius-md);
-    /* Opaque base, tint on top, so scrolled text can't show through */
-    background-color: #060924;
-    background-image: linear-gradient(rgba(255, 255, 255, 0.04), rgba(255, 255, 255, 0.04));
-    color: #8b99aa;
-    font-family: var(--font-sans);
-    font-size: 0.9rem;
-    font-weight: 600;
-    cursor: pointer;
-    flex-shrink: 0;
-    transition: color 0.15s ease, border-color 0.15s ease, background 0.15s ease;
-  }
-  /* Fades the command out as it slides under the button */
-  .copy-line::before {
-    content: '';
-    position: absolute;
-    top: -1px;
-    bottom: -1px;
-    /* Clears the button's own 1px border, which it would otherwise paint over */
-    right: calc(100% + 1px);
-    width: 3rem;
-    background: linear-gradient(to right, rgba(6, 9, 36, 0), #060924 88%);
-    pointer-events: none;
-  }
-  .copy-line svg { width: 18px; height: 18px; }
-  /* The `hidden` attribute doesn't apply to inline SVG — drive icon swap via class */
-  .copy-line .ic-check { display: none; }
-  .copy-line.copied .ic-copy { display: none; }
-  .copy-line.copied .ic-check { display: block; }
-  .copy-line:hover {
-    color: #66d9ed;
-    border-color: rgba(102, 217, 237, 0.42);
-    background-image: linear-gradient(rgba(102, 217, 237, 0.08), rgba(102, 217, 237, 0.08));
-  }
-  .copy-line.copied { color: #66d9ed; border-color: rgba(102, 217, 237, 0.42); }
-
-  .caret {
-    display: inline-block;
-    width: 9px;
-    height: 1.1em;
-    background: #66d9ed;
-    box-shadow: 0 0 9px rgba(102, 217, 237, 0.65);
-    vertical-align: text-bottom;
-    animation: caret-blink 1.1s steps(1, end) infinite;
-  }
-  @keyframes caret-blink {
-    50% { opacity: 0; }
-  }
-
-  .qs-note {
-    margin: 0;
-    padding-top: 0.35rem;
-    font-size: 0.95rem;
-    line-height: 1.7;
-    color: var(--color-text-secondary);
-  }
-  .qs-note a {
-    display: block;
-    width: fit-content;
-    margin-top: 0.65rem;
-    font-weight: 600;
-  }
-
-  @media (max-width: 900px) {
-    .qs-layout {
-      grid-template-columns: minmax(0, 1fr);
-      gap: 1.5rem;
-    }
-    /* console first, note underneath */
-    .qs-console { grid-area: auto; }
-    .qs-note { grid-area: auto; padding-top: 0; max-width: 545px; }
-  }
-
-  @media (max-width: 520px) {
-    .code-header { gap: 0.55rem; padding: 0.65rem 0.75rem; }
-    .dot { width: 8px; height: 8px; }
-    .mode-btn { padding: 0.28em 0.65em; font-size: 0.75rem; }
-    .code-body { padding: 1rem; font-size: 0.82rem; }
-    .copy-label { display: none; }
-    .copy-line { padding: 0 0.75rem; }
-    .qs-console::before,
-    .qs-console::after { display: none; }
-  }
+  @media (max-width: 400px) { .step-arrow { display: none; } .walkthrough-tabs button { padding-inline: 14px; } .walkthrough-top { flex-direction: column; gap: 8px; } }
 </style>

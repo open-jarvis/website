@@ -2,202 +2,61 @@
 import { getCollection } from 'astro:content';
 import Section from './Section.astro';
 import { site } from '../config/site';
-
 const items = (await getCollection('showcase')).sort((a, b) => a.data.order - b.data.order);
-
-// Per-use-case glyphs (stroke icons). Keyed by content slug / order.
-const icons: Record<number, string> = {
-  1: '<polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/>', // code
-  2: '<circle cx="12" cy="12" r="9"/><path d="M12 7v10"/><path d="M14.5 9.3c-.4-.8-1.3-1.3-2.5-1.3-1.6 0-2.6.8-2.6 1.9 0 2.6 5.2 1.3 5.2 3.9 0 1.1-1 1.9-2.6 1.9-1.2 0-2.1-.5-2.5-1.3"/>', // dollar
-  3: '<path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>', // chat
-  4: '<path d="M17 18a5 5 0 0 0-10 0"/><path d="M12 2v7"/><path d="M4.2 10.2l1.4 1.4M18.4 11.6l1.4-1.4M1 18h2M21 18h2M23 22H1"/><polyline points="8 6 12 2 16 6"/>', // sunrise
-  5: '<ellipse cx="12" cy="5" rx="8" ry="3"/><path d="M4 5v6c0 1.7 3.6 3 8 3s8-1.3 8-3V5"/><path d="M4 11v6c0 1.7 3.6 3 8 3s8-1.3 8-3v-6"/>', // memory/db
-};
+const coding = items.find(item => item.data.order === 1)!;
+const morning = items.find(item => item.data.order === 4)!;
+const more = items.filter(item => ![1, 4].includes(item.data.order));
+const href = (id: string) => `${site.links.docs}showcase/${id}/`;
 ---
-
-<Section id="showcase" title="See it in action" index={4} link="#community" linkText="Build your own">
-  <div class="gallery">
-    {items.map((item) => (
-      <a
-        class="gallery-item"
-        href={`${site.links.docs}showcase/${item.id}/`}
-        target="_blank"
-        rel="noopener noreferrer"
-        aria-label={`${item.data.title} — read the walkthrough in the docs`}
-      >
-        <div class="shot">
-          <div class="shot-chrome" aria-hidden="true">
-            <span class="cdot"></span><span class="cdot"></span><span class="cdot"></span>
-          </div>
-          <span class="shot-icon" aria-hidden="true">
-            <svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" set:html={icons[item.data.order] ?? icons[1]} />
-          </span>
-        </div>
-        <div class="caption">
-          <strong class="caption-title">
-            {item.data.title}
-            <span class="caption-arrow" aria-hidden="true">&rarr;</span>
-          </strong>
-          <span class="caption-summary">{item.data.summary}</span>
-        </div>
-      </a>
-    ))}
+<Section id="showcase" title="See it in action" link="#community" linkText="Build your own">
+  <div class="showcase-featured">
+    <a href={href(coding.id)} class="recipe recipe-code" target="_blank" rel="noopener noreferrer">
+      <div class="recipe-art code-art" aria-hidden="true"><span class="art-label">{coding.data.title}</span><div class="file-tree"><span>project/</span><span>├─ src/</span><span>├─ tests/</span><span>└─ README.md</span></div><div class="code-action"><span>Read</span><span>Reason</span><span>Edit <span>↗</span></span></div></div>
+      <div class="recipe-copy"><h3>{coding.data.title}<span aria-hidden="true">↗</span></h3><p>{coding.data.summary}</p></div>
+    </a>
+    <a href={href(morning.id)} class="recipe recipe-morning" target="_blank" rel="noopener noreferrer">
+      <div class="recipe-art morning-art" aria-hidden="true"><span class="art-label">{morning.data.title}</span><div class="brief-sources"><span>Calendar</span><span>Email</span><span>News</span></div><div class="brief-lines"><i></i><i></i><i></i></div><span class="brief-output">{morning.data.title} <span>↗</span></span></div>
+      <div class="recipe-copy"><h3>{morning.data.title}<span aria-hidden="true">↗</span></h3><p>{morning.data.summary}</p></div>
+    </a>
+  </div>
+  <div class="more-recipes">
+    {more.map(item => <a href={href(item.id)} target="_blank" rel="noopener noreferrer"><h3>{item.data.title}<span aria-hidden="true">↗</span></h3><p>{item.data.summary}</p></a>)}
   </div>
 </Section>
-
 <style>
-  /* Bento: one wide lead card, then a four-up run */
-  .gallery {
-    display: grid;
-    grid-template-columns: repeat(6, minmax(0, 1fr));
-    gap: 1.35rem;
-  }
-
-  .gallery-item:nth-child(1) { grid-column: span 4; }
-  .gallery-item:nth-child(1) .shot { aspect-ratio: 24 / 9; }
-  .gallery-item:nth-child(1) .shot-icon { width: 88px; height: 88px; }
-  .gallery-item:nth-child(1) .caption { padding: 1.15rem 1.35rem 1.3rem; }
-  .gallery-item:nth-child(1) .caption-title { font-size: 1.15rem; }
-  .gallery-item:nth-child(n + 2) { grid-column: span 2; }
-
-  @media (max-width: 1040px) and (min-width: 761px) {
-    .gallery { grid-template-columns: repeat(4, minmax(0, 1fr)); }
-    .gallery-item:nth-child(1) { grid-column: span 4; }
-    .gallery-item:nth-child(1) .shot { aspect-ratio: 21 / 9; }
-    .gallery-item:nth-child(n + 2) { grid-column: span 2; }
-  }
-
-  @media (max-width: 760px) {
-    .gallery-item:nth-child(1),
-    .gallery-item:nth-child(n + 2) { grid-column: auto; }
-    .gallery-item:nth-child(1) .shot { aspect-ratio: 16 / 10; }
-    .gallery-item:nth-child(1) .shot-icon { width: 72px; height: 72px; }
-  }
-
-  .gallery-item {
-    margin: 0;
-    display: flex;
-    flex-direction: column;
-    background-color: var(--color-surface);
-    border: 1px solid var(--color-border);
-    border-radius: var(--radius-lg);
-    overflow: hidden;
-    text-decoration: none;
-    color: inherit;
-    transition: transform 0.16s ease, border-color 0.16s ease, box-shadow 0.16s ease;
-  }
-  .gallery-item:hover {
-    transform: translateY(-1px);
-    border-color: var(--color-border-accent);
-    box-shadow: 0 0 0 1px color-mix(in srgb, var(--color-holo) 10%, transparent),
-                0 0 30px color-mix(in srgb, var(--color-holo) 13%, transparent);
-  }
-
-  /* Designed "app preview" panel (no screenshot needed) */
-  .shot {
-    position: relative;
-    aspect-ratio: 16 / 10;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background:
-      radial-gradient(120% 90% at 50% 0%,
-        color-mix(in srgb, var(--color-holo) 13%, transparent) 0%, transparent 60%),
-      radial-gradient(80% 70% at 80% 90%,
-        color-mix(in srgb, var(--color-holo) 10%, transparent) 0%, transparent 55%),
-      linear-gradient(160deg,
-        color-mix(in srgb, var(--color-accent) 8%, var(--color-surface-strong)) 0%,
-        var(--color-bg-alt) 100%);
-    border-bottom: 1px solid var(--color-border);
-    overflow: hidden;
-  }
-  .shot::before {
-    content: '';
-    position: absolute;
-    inset: -70% 0;
-    z-index: 2;
-    opacity: 0;
-    pointer-events: none;
-    background: linear-gradient(
-      to bottom,
-      transparent 46%,
-      color-mix(in srgb, var(--color-holo) 8%, transparent) 49%,
-      color-mix(in srgb, var(--color-holo) 62%, transparent) 50%,
-      color-mix(in srgb, var(--color-holo) 8%, transparent) 51%,
-      transparent 54%
-    );
-    transform: translateY(-20%);
-    transition: transform 0.9s cubic-bezier(0.2, 0.7, 0.2, 1), opacity 0.2s ease;
-  }
-  .gallery-item:hover .shot::before {
-    opacity: 0.65;
-    transform: translateY(20%);
-  }
-  .shot::after {
-    content: '';
-    position: absolute;
-    inset: 0;
-    background-image:
-      linear-gradient(var(--color-border) 1px, transparent 1px),
-      linear-gradient(90deg, var(--color-border) 1px, transparent 1px);
-    background-size: 28px 28px;
-    opacity: 0.18;
-    mask-image: radial-gradient(80% 80% at 50% 40%, #000 30%, transparent 75%);
-    -webkit-mask-image: radial-gradient(80% 80% at 50% 40%, #000 30%, transparent 75%);
-  }
-
-  .shot-chrome {
-    position: absolute;
-    top: 0.7rem;
-    left: 0.8rem;
-    display: flex;
-    gap: 6px;
-    z-index: 1;
-  }
-  .cdot { width: 9px; height: 9px; border-radius: 50%; background: var(--color-border); }
-  .cdot:nth-child(1) { background: #2150a6; opacity: 0.55; }
-  .cdot:nth-child(2) { background: #4a83c9; opacity: 0.72; }
-  .cdot:nth-child(3) { background: #66d9ed; box-shadow: 0 0 7px rgba(102, 217, 237, 0.5); }
-
-  .shot-icon {
-    position: relative;
-    z-index: 1;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    width: 72px;
-    height: 72px;
-    border-radius: 50%;
-    color: var(--color-holo);
-    background: radial-gradient(circle,
-      color-mix(in srgb, var(--color-holo) 14%, transparent),
-      color-mix(in srgb, var(--color-accent) 14%, transparent));
-    border: 1px solid var(--color-border-accent);
-    box-shadow: 0 0 30px var(--glow-holo), inset 0 0 18px var(--glow-holo);
-  }
-
-  .caption {
-    padding: 1rem 1.1rem 1.15rem;
-    display: flex;
-    flex-direction: column;
-    gap: 0.35rem;
-  }
-  .caption-title {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 0.5rem;
-    font-size: 1rem;
-    font-weight: 700;
-    color: var(--color-text);
-  }
-  .caption-arrow {
-    color: var(--color-text-tertiary);
-    transition: color 0.15s ease, transform 0.15s ease;
-  }
-  .gallery-item:hover .caption-arrow {
-    color: var(--color-accent);
-    transform: translateX(3px);
-  }
-  .caption-summary { font-size: 0.9rem; color: var(--color-text-secondary); line-height: 1.55; }
+  .showcase-featured { display: grid; grid-template-columns: 1fr 1fr; gap: 26px; }
+  .recipe { display: block; border: 1px solid #dce4ee; border-radius: 8px; overflow: hidden; color: var(--color-text); }
+  .recipe:hover { border-color: #8aa7ce; color: var(--color-text); }
+  .recipe-art { height: 214px; position: relative; padding: 25px 32px; overflow: hidden; }
+  .art-label { font-family: var(--font-mono); font-size: .6rem; color: #667992; }
+  .code-art { background: #eef3fb; }
+  .file-tree { display: flex; flex-direction: column; padding: 20px 0 0 10px; font-family: var(--font-mono); font-size: .84rem; line-height: 1.8; color: #6380a7; }
+  .file-tree > span:first-child { color: #335680; }
+  .code-action { display: flex; flex-direction: column; gap: 10px; position: absolute; top: 67px; right: 48px; width: 110px; }
+  .code-action > span { padding: 7px 12px; background: #fff; border: 1px solid #d7e2f0; border-radius: 4px; font-size: .7rem; color: #5c7698; }
+  .code-action > span:last-child { background: #dce8fb; border-color: #bcd0ed; color: #315f9d; }
+  .code-action span span { float: right; }
+  .morning-art { background: #f3f5eb; }
+  .brief-sources { display: flex; gap: 10px; margin-top: 25px; }
+  .brief-sources span { padding: 7px 14px; background: #fff; border: 1px solid #dce1ce; border-radius: 4px; color: #7b8a63; font-size: .7rem; }
+  .brief-lines { display: flex; flex-direction: column; gap: 8px; margin-top: 18px; max-width: 320px; }
+  .brief-lines i { height: 4px; background: #dce2cf; width: 100%; border-radius: 3px; }
+  .brief-lines i:nth-child(2) { width: 88%; }
+  .brief-lines i:nth-child(3) { width: 63%; }
+  .brief-output { position: absolute; bottom: 22px; left: 32px; right: 32px; font-family: var(--font-serif); font-size: 1.1rem; font-style: italic; color: #5f7550; }
+  .brief-output span { float: right; font-family: var(--font-sans); }
+  .recipe-copy { padding: 27px 30px 25px; }
+  .recipe-category { font-family: var(--font-mono); font-size: .62rem; text-transform: uppercase; letter-spacing: .04em; color: #74859b; }
+  .recipe-copy h3 > span { float: right; color: #7f96b2; font-size: .9rem; }
+  .recipe-copy h3 { font-size: 1.33rem; letter-spacing: -.03em; font-weight: 500; margin: 11px 0 12px; }
+  .recipe-copy p { font-size: .88rem; line-height: 1.75; min-height: 3em; }
+  .recipe-link { display: flex; justify-content: space-between; margin-top: 22px; font-size: .76rem; color: #315f9d; }
+  .more-recipes { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 32px; margin-top: 40px; }
+  .more-recipes a { border-top: 1px solid #dfe6ee; padding-top: 22px; }
+  .more-recipes h3 { display: flex; justify-content: space-between; font-size: 1rem; font-weight: 500; margin-bottom: 14px; }
+  .more-recipes h3 > span { color: #7f96b2; font-size: .9rem; }
+  .more-recipes p { font-size: .84rem; line-height: 1.8; margin-bottom: 15px; }
+  .more-label { font-size: .72rem; }
+  @media (max-width: 760px) { .showcase-featured { grid-template-columns: 1fr; } .more-recipes { grid-template-columns: 1fr; gap: 24px; } .recipe-art { padding-inline: 24px; } .recipe-copy { padding: 24px; } }
+  @media (max-width: 400px) { .code-action { right: 24px; width: 90px; } .file-tree { font-size: .74rem; padding-left: 0; } .brief-sources { gap: 6px; } .brief-sources span { padding-inline: 10px; } }
 </style>

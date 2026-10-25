@@ -3,128 +3,22 @@ interface Props {
   id: string;
   title: string;
   index?: number;
+  kicker?: string;
   link?: string;
   linkText?: string;
   external?: boolean;
 }
-
-const { id, title, index, link, linkText, external } = Astro.props;
-
-const railIndex = index === undefined ? null : String(index).padStart(2, '0');
+const { id, title, kicker, link, linkText, external } = Astro.props;
 ---
-
 <section id={id} class="section">
   <div class="container">
-    <div class="section-grid">
-      <div class="section-rail" aria-hidden="true">
-        <div class="rail-inner">
-          {railIndex && <span class="rail-index">{railIndex}</span>}
-          <span class="rail-line"></span>
-        </div>
+    <div class="section-header">
+      <div>
+        {kicker && <p class="section-kicker">{kicker}</p>}
+        <h2 class="section-title">{title}</h2>
       </div>
-
-      <div class="section-main">
-        <div class="section-header">
-          <h2 class="section-title">
-            <span class="section-chevron" aria-hidden="true"></span>
-            {title}
-          </h2>
-          {link && (
-            <a
-              class="section-link"
-              href={link}
-              {...external ? { target: '_blank', rel: 'noopener noreferrer' } : {}}
-            >
-              {linkText ?? 'View all'} <span aria-hidden="true">&rarr;</span>
-            </a>
-          )}
-        </div>
-        <slot />
-      </div>
+      {link && <a class="section-link" href={link} {...external ? { target: '_blank', rel: 'noopener noreferrer' } : {}}>{linkText ?? 'View all'} <span aria-hidden="true">↗</span></a>}
     </div>
+    <slot />
   </div>
 </section>
-
-<style>
-  .section-grid {
-    display: grid;
-    grid-template-columns: var(--rail-w) minmax(0, 1fr);
-    gap: clamp(1rem, 2.5vw, 2.25rem);
-  }
-
-  .section-rail { align-self: stretch; }
-
-  .rail-inner {
-    position: sticky;
-    top: 96px;
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 0.7rem;
-  }
-
-  .rail-index {
-    position: relative;
-    font-family: var(--font-mono);
-    font-size: 0.8rem;
-    font-weight: 500;
-    letter-spacing: 0.14em;
-    color: var(--color-holo);
-    opacity: 0.8;
-    text-shadow: 0 0 14px var(--glow-holo);
-  }
-
-  .rail-line {
-    position: relative;
-    width: 1px;
-    height: clamp(3rem, 7vw, 5.5rem);
-    margin-left: 0.35rem;
-    background: linear-gradient(
-      to bottom,
-      color-mix(in srgb, var(--color-holo) 55%, transparent),
-      transparent
-    );
-  }
-  /* short cross tick where the rail begins */
-  .rail-line::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: -3px;
-    width: 7px;
-    height: 1px;
-    background: color-mix(in srgb, var(--color-holo) 70%, transparent);
-  }
-
-  @media (max-width: 760px) {
-    .section-grid {
-      grid-template-columns: minmax(0, 1fr);
-      gap: 0.85rem;
-    }
-
-    .rail-inner {
-      position: static;
-      flex-direction: row;
-      align-items: center;
-      gap: 0.6rem;
-    }
-
-    .rail-line {
-      width: 2.75rem;
-      height: 1px;
-      margin-left: 0;
-      background: linear-gradient(
-        to right,
-        color-mix(in srgb, var(--color-holo) 55%, transparent),
-        transparent
-      );
-    }
-
-    .rail-line::before {
-      top: -3px;
-      left: 0;
-      width: 1px;
-      height: 7px;
-    }
-  }
-</style>

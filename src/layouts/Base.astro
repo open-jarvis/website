@@ -15,67 +15,14 @@ const { title = site.name, description = site.subhead } = Astro.props;
     <meta property="og:type" content="website" />
     <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png" />
     <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
-    <meta name="color-scheme" content="dark light" />
+    <meta name="color-scheme" content="light" />
+    <meta name="theme-color" content="#ffffff" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@500;600;700&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
-    {/* No-flash theme: dark-first. Saved choice wins; otherwise default to dark. */}
-    <script is:inline>
-      (function () {
-        try {
-          var saved = localStorage.getItem('theme');
-          var theme = saved === 'light' || saved === 'dark' ? saved : 'dark';
-          document.documentElement.dataset.theme = theme;
-          document.documentElement.style.colorScheme = theme;
-        } catch (e) {
-          document.documentElement.dataset.theme = 'dark';
-        }
-      })();
-    </script>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Lora:ital,wght@0,400;0,500;0,600;1,400;1,500&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet" />
   </head>
   <body>
-    <div class="bg-grid" aria-hidden="true"></div>
-    <div class="bg-scan" aria-hidden="true"></div>
+    <a href="#main" class="skip-link">Skip to content</a>
     <slot />
-    <script>
-      const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
-
-      // Scroll-reveal with light stagger
-      if (!reduce && 'IntersectionObserver' in window) {
-        const sel = [
-          '.hero-copy > *', '.hero-mark-wrap', '.section-header', '.feature-card',
-          '.gallery-item', '.ww-col', '.cta-card', '.qs-console', '.qs-note',
-          '.ww-intro', '.community-intro',
-        ].join(', ');
-        const els = Array.from(document.querySelectorAll<HTMLElement>(sel));
-        els.forEach((el) => el.classList.add('reveal'));
-        let anyRevealed = false;
-        const io = new IntersectionObserver(
-          (entries) => {
-            entries.forEach((e) => {
-              if (e.isIntersecting) {
-                e.target.classList.add('in');
-                anyRevealed = true;
-                io.unobserve(e.target);
-              }
-            });
-          },
-          { rootMargin: '0px 0px -8% 0px', threshold: 0.08 },
-        );
-        els.forEach((el) => {
-          const sibs = el.parentElement
-            ? Array.from(el.parentElement.children).filter((c) => c.classList.contains('reveal'))
-            : [el];
-          el.style.transitionDelay = Math.min(sibs.indexOf(el), 6) * 55 + 'ms';
-          io.observe(el);
-        });
-        // Safety net: if the observer never fires at all (broken/blocked), reveal
-        // everything rather than leaving the page blank. When it works, trust it —
-        // below-fold content should still reveal on scroll.
-        setTimeout(() => {
-          if (!anyRevealed) els.forEach((el) => el.classList.add('in'));
-        }, 2600);
-      }
-    </script>
   </body>
 </html>

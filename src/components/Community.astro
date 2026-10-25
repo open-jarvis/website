@@ -75,127 +75,19 @@ import { site } from '../config/site';
 </Section>
 
 <style>
-  .community-intro {
-    max-width: 64ch;
-    font-size: 1.05rem;
-    line-height: 1.7;
-    margin: 0 0 2rem;
-  }
-
-  /* The download card becomes a tall panel on the left; the two link cards
-     stack beside it. DOM order is untouched, only the placement changes. */
-  .cta-grid {
-    display: grid;
-    grid-template-columns: 1.4fr 1fr;
-    grid-template-rows: auto auto;
-    gap: 1.25rem;
-  }
-
-  .cta-card:nth-child(1) { grid-area: 1 / 2; }
-  .cta-card:nth-child(2) { grid-area: 2 / 2; }
-  .cta-card--accent { grid-area: 1 / 1 / span 2 / 2; }
-
-  .cta-card {
-    display: flex;
-    align-items: center;
-    gap: 1rem;
-    background-color: var(--color-surface);
-    border: 1px solid var(--color-border);
-    border-radius: var(--radius-lg);
-    padding: 1.25rem 1.5rem;
-    text-decoration: none;
-    color: var(--color-text);
-    transition: border-color 0.15s ease, box-shadow 0.15s ease, transform 0.15s ease;
-  }
-
-  .cta-card:hover {
-    border-color: var(--color-border-accent);
-    box-shadow: 0 0 22px color-mix(in srgb, var(--color-holo) 11%, transparent);
-    transform: translateY(-1px);
-    color: var(--color-text);
-  }
-
-  .cta-card--accent {
-    flex-direction: column;
-    align-items: flex-start;
-    justify-content: space-between;
-    gap: 2rem;
-    min-height: 12rem;
-    padding: 1.75rem 1.9rem;
-    background: var(--color-accent);
-    border-color: color-mix(in srgb, var(--color-holo) 28%, var(--color-accent));
-    color: var(--color-core);
-    box-shadow: 0 10px 34px color-mix(in srgb, var(--color-accent) 24%, transparent);
-  }
-  .cta-card--accent .cta-text { flex: 0 0 auto; gap: 0.4rem; }
-  .cta-card--accent .cta-text strong { font-size: 1.3rem; line-height: 1.2; }
-  .cta-card--accent .cta-text span { font-size: 0.92rem; }
-  .cta-card--accent .cta-icon { opacity: 1; }
-  .cta-card--accent .cta-arrow { font-size: 1.35rem; align-self: flex-end; }
-
-  .cta-card--accent:hover {
-    background: var(--color-accent);
-    border-color: var(--color-holo);
-    color: var(--color-core);
-    box-shadow: 0 0 0 1px color-mix(in srgb, var(--color-holo) 20%, transparent),
-                0 0 28px color-mix(in srgb, var(--color-holo) 28%, transparent);
-  }
-
-  .cta-icon {
-    display: flex;
-    flex-shrink: 0;
-    color: inherit;
-    opacity: 0.85;
-  }
-
-  .cta-text {
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    gap: 0.2rem;
-  }
-
-  .cta-text strong {
-    font-size: 0.95rem;
-    font-weight: 700;
-    color: inherit;
-  }
-
-  .cta-text span {
-    font-size: 0.825rem;
-    color: inherit;
-    opacity: 0.75;
-  }
-
-  .cta-arrow {
-    font-size: 1.1rem;
-    opacity: 0.6;
-    flex-shrink: 0;
-    transition: transform 0.15s ease;
-  }
-
-  .cta-card:hover .cta-arrow {
-    transform: translateX(3px);
-    opacity: 1;
-  }
-
-  @media (max-width: 760px) {
-    .cta-grid { grid-template-rows: auto; }
-
-    .cta-card:nth-child(1),
-    .cta-card:nth-child(2),
-    .cta-card--accent { grid-area: auto; }
-
-    .cta-card--accent {
-      flex-direction: row;
-      align-items: center;
-      justify-content: flex-start;
-      gap: 1rem;
-      min-height: 0;
-      padding: 1.25rem 1.5rem;
-    }
-    .cta-card--accent .cta-text strong { font-size: 0.95rem; }
-    .cta-card--accent .cta-text span { font-size: 0.825rem; }
-    .cta-card--accent .cta-arrow { font-size: 1.1rem; align-self: auto; }
-  }
+  .community-intro { max-width: 62ch; font-size: 1.05rem; margin: -1rem 0 2.5rem; }
+  .cta-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 1.25rem; }
+  .cta-card { position: relative; display: flex; flex-direction: column; align-items: start; gap: 1.5rem; padding: 1.6rem; min-height: 210px; border: 1px solid #dde5ef; border-radius: 8px; background: #f9fbff; color: var(--color-text); }
+  .cta-card:nth-child(2) { background: #f9fbff; border-color: #dde5ef; }
+  .cta-card--accent { background: #edf4ff; border-color: #cdddf4; }
+  .cta-card:hover { border-color: var(--color-accent); color: var(--color-text); }
+  .cta-icon { color: #5279aa; }
+  .cta-card:nth-child(2) .cta-icon { color: #5279aa; }
+  .cta-card--accent .cta-icon { color: var(--color-accent); }
+  .cta-icon svg { width: 24px; height: 24px; }
+  .cta-text { display: flex; flex-direction: column; gap: .5rem; }
+  .cta-text strong { font-size: .98rem; font-weight: 500; }
+  .cta-text span { color: var(--color-text-secondary); font-size: .8rem; }
+  .cta-arrow { position: absolute; right: 1.5rem; top: 1.4rem; color: var(--color-text-secondary); }
+  @media (max-width: 760px) { .cta-grid { grid-template-columns: 1fr; } .cta-card { min-height: 0; gap: 1rem; } }
 </style>
