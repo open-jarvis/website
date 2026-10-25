@@ -1,364 +1,48 @@
 ---
 import { site } from '../config/site';
-import LogoMark from './LogoMark.astro';
 ---
-
 <header class="hero">
-  <div class="hero-inner container">
-    <div class="hero-copy">
-      <h1 class="hero-wordmark">OpenJarvis</h1>
-
-      <p class="hero-tagline">{site.tagline}</p>
-
-      <p class="hero-desc">{site.subhead}</p>
-
-      <div class="hero-ctas">
-        <a href="#quickstart" class="btn btn-primary">
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
-            <path d="M13 2 4.5 13.5H11l-1 8.5 9.5-13H13l1-7z"></path>
-          </svg>
-          Get Started
-        </a>
-        <a href={site.links.github} class="btn btn-outline" target="_blank" rel="noopener noreferrer">
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
-            <path d="M12 0C5.374 0 0 5.373 0 12c0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23A11.509 11.509 0 0 1 12 5.803c1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576C20.566 21.797 24 17.3 24 12 24 5.373 18.627 0 12 0z"></path>
-          </svg>
-          View on GitHub
-        </a>
-      </div>
-    </div>
-
-    <div class="hero-stage">
-      <div class="hero-mark-wrap" aria-hidden="true">
-        <span class="hero-crosshair"></span>
-        <span class="hero-orbit-outer"></span>
-        <span class="hero-dial"></span>
-        <span class="hero-sweep"></span>
-        <span class="hero-gimbal hero-gimbal-a"></span>
-        <span class="hero-gimbal hero-gimbal-b"></span>
-        <span class="hero-brackets"><i></i><i></i><i></i><i></i></span>
-        <LogoMark animated class="hero-mark" />
-      </div>
+  <div class="container hero-content">
+    <h1><img src="/logo-mark.svg" alt="" width="76" height="76" /><span>OpenJarvis</span></h1>
+    <p class="hero-tagline"><span>{site.tagline.split(", ")[0]},</span> <em>{site.tagline.split(", ").slice(1).join(", ")}</em></p>
+    <p class="hero-description">{site.subhead}</p>
+    <div class="hero-actions">
+      <a class="btn btn-primary" href="#quickstart">Get Started <span aria-hidden="true">→</span></a>
+      <a class="btn btn-outline" href={site.links.github} target="_blank" rel="noopener noreferrer"><svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 0a12 12 0 0 0-3.8 23.4c.6.1.8-.3.8-.6v-2.2c-3.3.7-4-1.4-4-1.4-.6-1.4-1.4-1.7-1.4-1.7-1.1-.8.1-.8.1-.8 1.2.1 1.8 1.3 1.8 1.3 1.1 1.8 2.8 1.3 3.5 1 .1-.8.4-1.3.8-1.6-2.7-.3-5.5-1.3-5.5-5.9 0-1.3.5-2.4 1.2-3.2-.1-.3-.5-1.5.1-3.2 0 0 1-.3 3.3 1.2a11.5 11.5 0 0 1 6 0C17.3 4.7 18.3 5 18.3 5c.7 1.7.3 2.9.1 3.2.8.8 1.3 1.9 1.3 3.2 0 4.6-2.8 5.6-5.5 5.9.4.4.8 1.1.8 2.2v3.3c0 .3.2.7.8.6A12 12 0 0 0 12 0Z"/></svg>View on GitHub</a>
     </div>
   </div>
 </header>
-
 <style>
   .hero {
-    /* Declared here, not on the wrap, so the stacked gap below can size itself
-       against the mark and clear the reticle overhang. */
-    --mark: clamp(160px, 18vw, 216px);
     position: relative;
-    padding: 104px 0 88px;
-    text-align: left;
+    padding: 52px 0 48px;
+    text-align: center;
+    background: radial-gradient(ellipse 60% 90% at 50% 10%, #eef5ff 0%, #f8fbff80 48%, transparent 85%);
   }
-
-  .hero-inner {
-    display: grid;
-    grid-template-columns: minmax(0, 1.04fr) minmax(0, 0.96fr);
-    align-items: center;
-    gap: clamp(2rem, 6vw, 4.5rem);
-    min-width: 0;
+  .hero-content { position: relative; }
+  h1 { display: flex; align-items: center; justify-content: center; gap: 18px; font-family: var(--font-sans); font-size: clamp(3.5rem, 7.2vw, 6rem); line-height: 1.1; font-weight: 700; letter-spacing: -.065em; margin: 0 0 20px; color: #1d3353; }
+  h1 img { width: .85em; height: .85em; flex-shrink: 0; }
+  .hero-tagline { margin-bottom: 18px; font-family: var(--font-serif); font-size: clamp(1.65rem, 3.15vw, 2.65rem); line-height: 1.3; letter-spacing: -.045em; color: #2d3e58; }
+  .hero-tagline em { font-weight: 400; color: #476e9c; }
+  .hero-description { font-size: 1.06rem; line-height: 1.75; color: #5a6677; margin: 0 auto 25px; max-width: 730px; }
+  .hero-actions { display: flex; align-items: center; justify-content: center; gap: 12px; flex-wrap: wrap; }
+  .hero-actions .btn { min-width: 145px; min-height: 48px; }
+  .hero-principles { display: flex; align-items: center; justify-content: center; flex-wrap: wrap; gap: 0; font-size: .72rem; color: #6b7686; margin-top: 22px; }
+  .hero-principles span + span::before { content: '·'; padding-inline: 13px; color: #9eabbb; }
+  @media (max-width: 480px) {
+    .hero-actions { display: flex; max-width: 340px; margin-inline: auto; }
   }
-
-  /* The reticle layers extend well past the mark itself (out to -46%), so the
-     copy is lifted above the stage to keep the text and buttons clear of them. */
-  .hero-copy {
-    min-width: 0;
-    position: relative;
-    z-index: 2;
-  }
-
-  /* ---------- Reactor mark + target-lock reticle ---------- */
-  .hero-stage {
-    display: flex;
-    justify-content: center;
-    min-width: 0;
-    position: relative;
-    z-index: 1;
-  }
-
-  .hero-mark-wrap {
-    position: relative;
-    display: grid;
-    place-items: center;
-    width: var(--mark);
-    height: var(--mark);
-    animation: hero-float 7s ease-in-out infinite;
-  }
-
-  .hero-mark {
-    width: 100%;
-    height: 100%;
-    filter: drop-shadow(0 0 22px var(--logo-glow)) drop-shadow(0 0 34px var(--glow-holo));
-    position: relative;
-    z-index: 2;
-  }
-
-  .hero-mark-wrap > span {
-    position: absolute;
-    pointer-events: none;
-  }
-
-  /* Far segmented dial — an azure blue, a step away from the cyan of the inner
-     layers so the outermost ring reads as distant. The masks below use
-     farthest-side: with the default farthest-corner the ring lands outside the
-     border-radius clip and never paints. */
-  .hero-orbit-outer {
-    inset: -30%;
-    border-radius: 50%;
-    opacity: 0.42;
-    /* The period must divide 360 exactly or the wrap point gets a clipped dash:
-       20deg gives 18 even segments. */
-    background: repeating-conic-gradient(
-      from 2deg,
-      color-mix(in srgb, var(--color-accent) 58%, var(--color-holo)) 0 2deg,
-      transparent 2deg 20deg
-    );
-    mask: radial-gradient(farthest-side, transparent calc(100% - 3px), #000 calc(100% - 2px));
-    -webkit-mask: radial-gradient(farthest-side, transparent calc(100% - 3px), #000 calc(100% - 2px));
-    animation: orbit-spin 64s linear infinite;
-  }
-
-  /* Fine tick ring, counter-rotating against the far dial */
-  .hero-dial {
-    inset: -18%;
-    border-radius: 50%;
-    background: repeating-conic-gradient(
-      from 0deg,
-      color-mix(in srgb, var(--color-holo) 65%, transparent) 0 0.6deg,
-      transparent 0.6deg 6deg
-    );
-    mask: radial-gradient(farthest-side, transparent calc(100% - 6px), #000 calc(100% - 5px));
-    -webkit-mask: radial-gradient(farthest-side, transparent calc(100% - 6px), #000 calc(100% - 5px));
-    opacity: 0.8;
-    animation: orbit-spin 38s linear infinite reverse;
-  }
-
-  /* Radar sweep — a wedge of light dragging around the annulus */
-  .hero-sweep {
-    inset: -11%;
-    border-radius: 50%;
-    background: conic-gradient(
-      from 0deg,
-      color-mix(in srgb, var(--color-holo) 52%, transparent) 0deg,
-      color-mix(in srgb, var(--color-holo) 16%, transparent) 26deg,
-      transparent 66deg,
-      transparent 360deg
-    );
-    mask: radial-gradient(farthest-side, transparent 76%, #000 88% 100%);
-    -webkit-mask: radial-gradient(farthest-side, transparent 76%, #000 88% 100%);
-    opacity: 0.75;
-    animation: orbit-spin 4.6s linear infinite;
-  }
-
-  /* Gimbal arc pairs — partial rings on opposite axes, counter-rotating */
-  .hero-gimbal {
-    border-radius: 50%;
-    border: 1px solid transparent;
-  }
-  .hero-gimbal-a {
-    inset: -11%;
-    border-top-color: color-mix(in srgb, var(--color-holo) 72%, transparent);
-    border-bottom-color: color-mix(in srgb, var(--color-holo) 72%, transparent);
-    box-shadow: 0 0 14px var(--glow-holo);
-    animation: orbit-spin 13s linear infinite;
-  }
-  .hero-gimbal-b {
-    inset: -4%;
-    border-left-color: color-mix(in srgb, var(--color-holo) 48%, transparent);
-    border-right-color: color-mix(in srgb, var(--color-holo) 48%, transparent);
-    animation: orbit-spin 17s linear infinite reverse;
-  }
-
-  /* Crosshair hairlines with a gap over the mark itself */
-  .hero-crosshair {
-    inset: -46%;
-    background:
-      linear-gradient(
-        to right,
-        transparent 0 4%,
-        color-mix(in srgb, var(--color-holo) 46%, transparent) 15%,
-        transparent 34%,
-        transparent 66%,
-        color-mix(in srgb, var(--color-holo) 46%, transparent) 85%,
-        transparent 96%
-      ) center / 100% 1px no-repeat,
-      linear-gradient(
-        to bottom,
-        transparent 0 4%,
-        color-mix(in srgb, var(--color-holo) 46%, transparent) 15%,
-        transparent 34%,
-        transparent 66%,
-        color-mix(in srgb, var(--color-holo) 46%, transparent) 85%,
-        transparent 96%
-      ) center / 1px 100% no-repeat;
-    animation: hud-flicker 5.5s steps(1, end) infinite;
-  }
-
-  /* Corner brackets — the actual "zeroing in on a target" beat */
-  .hero-brackets {
-    inset: -24%;
-    animation: lock-acquire 12s linear infinite;
-  }
-  .hero-brackets i {
-    position: absolute;
-    width: 15%;
-    height: 15%;
-    background: none;
-    border: 1.25px solid var(--color-accent);
-  }
-  .hero-brackets i:nth-child(1) {
-    top: 0; left: 0;
-    border-right: 0; border-bottom: 0;
-  }
-  .hero-brackets i:nth-child(2) {
-    top: 0; right: 0;
-    border-left: 0; border-bottom: 0;
-  }
-  .hero-brackets i:nth-child(3) {
-    bottom: 0; right: 0;
-    border-left: 0; border-top: 0;
-  }
-  .hero-brackets i:nth-child(4) {
-    bottom: 0; left: 0;
-    border-right: 0; border-top: 0;
-  }
-
-  @keyframes hero-float {
-    0%, 100% { transform: translateY(0); }
-    50%      { transform: translateY(-9px); }
-  }
-
-  @keyframes orbit-spin {
-    to { transform: rotate(360deg); }
-  }
-
-  /* Fly in and fade up, settle, click 45deg and back, then fly out and rest
-     empty for a beat before the loop restarts. Per-keyframe timing functions
-     give the two rotations a mechanical detent against the smoother travel. */
-  @keyframes lock-acquire {
-    0%   { transform: scale(1.5) rotate(0deg);   opacity: 0;
-           animation-timing-function: cubic-bezier(0.14, 0.8, 0.24, 1); }
-    13%  { transform: scale(1) rotate(0deg);     opacity: 0.95;
-           animation-timing-function: linear; }
-    27%  { transform: scale(1) rotate(0deg);     opacity: 0.9;
-           animation-timing-function: cubic-bezier(0.34, 1.56, 0.44, 1); }
-    35%  { transform: scale(1) rotate(45deg);    opacity: 1;
-           animation-timing-function: linear; }
-    51%  { transform: scale(1) rotate(45deg);    opacity: 0.95;
-           animation-timing-function: cubic-bezier(0.34, 1.56, 0.44, 1); }
-    59%  { transform: scale(1) rotate(0deg);     opacity: 0.9;
-           animation-timing-function: linear; }
-    77%  { transform: scale(1) rotate(0deg);     opacity: 0.85;
-           animation-timing-function: cubic-bezier(0.6, 0, 0.86, 0.28); }
-    91%  { transform: scale(1.5) rotate(0deg);   opacity: 0;
-           animation-timing-function: linear; }
-    100% { transform: scale(1.5) rotate(0deg);   opacity: 0; }
-  }
-
-  @keyframes hud-flicker {
-    0%, 46%   { opacity: 0.45; }
-    48%       { opacity: 0.85; }
-    52%       { opacity: 0.45; }
-    88%       { opacity: 0.45; }
-    90%       { opacity: 0.7; }
-    92%, 100% { opacity: 0.45; }
-  }
-
-  /* ---------- Copy ---------- */
-  .hero-wordmark {
-    font-family: var(--font-display);
-    font-weight: 700;
-    font-size: clamp(2.8rem, 7.5vw, 4.9rem);
-    line-height: 1;
-    letter-spacing: -0.005em;
-    margin: 0 0 1rem;
-    color: var(--color-text);
-    text-shadow: 0 0 28px color-mix(in srgb, var(--color-accent) 28%, transparent);
-  }
-
-  .hero-tagline {
-    font-family: var(--font-display);
-    font-size: clamp(0.9rem, 1.5vw, 1.08rem);
-    font-weight: 600;
-    letter-spacing: 0.2em;
-    text-transform: uppercase;
-    color: var(--color-holo);
-    margin: 0 0 1.5rem;
-    text-shadow: 0 0 18px var(--glow-holo);
-  }
-
-  .hero-desc {
-    font-size: clamp(1.02rem, 1.6vw, 1.15rem);
-    color: var(--color-text-secondary);
-    max-width: 46ch;
-    line-height: 1.65;
-    margin: 0 0 2.25rem;
-  }
-
-  .hero-ctas {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.75rem;
-  }
-  .hero-ctas .btn { padding: 0.72em 1.45em; font-size: 1rem; }
-
-  /* The loop ends fully faded out, and reduced motion snaps to the last frame,
-     so park the brackets in their settled state instead. */
-  @media (prefers-reduced-motion: reduce) {
-    .hero-brackets {
-      animation: none !important;
-      transform: none;
-      opacity: 0.85;
-    }
-  }
-
-  @media (max-width: 900px) {
-    .hero {
-      --mark: clamp(150px, 42vw, 210px);
-      /* Stacked, the mark sits directly under the nav, so the top padding has to
-         clear the reticle overhang the same way the row gap below does. */
-      padding: calc(var(--mark) * 0.46 + 2.5rem) 0 72px;
-      text-align: center;
-    }
-
-    .hero-inner {
-      grid-template-columns: minmax(0, 1fr);
-      justify-items: center;
-      /* Reticle layers overhang the mark box and that overhang falls outside the
-         grid row, so the gap absorbs it: 46% for the crosshair, more for the
-         brackets at the top of their fly-out. */
-      gap: calc(var(--mark) * 0.52 + 1.25rem);
-    }
-
-    .hero-stage { order: -1; }
-
-    .hero-desc { margin-inline: auto; }
-
-    .hero-ctas { justify-content: center; }
-  }
-
-  @media (max-width: 520px) {
-    /* Top padding still comes from the calc above, which tracks the new --mark. */
-    .hero { --mark: 132px; padding-bottom: 58px; }
-
-    .hero-wordmark { font-size: clamp(2.7rem, 14vw, 3.5rem); }
-
-    .hero-tagline {
-      max-width: 24rem;
-      font-size: 0.78rem;
-      letter-spacing: 0.15em;
-      line-height: 1.65;
-    }
-
-    .hero-desc { font-size: 1rem; }
-
-    .hero-ctas {
-      width: min(100%, 18rem);
-      flex-direction: column;
-    }
-
-    .hero-ctas .btn { justify-content: center; width: 100%; }
+  @media (max-width: 600px) {
+    .hero { padding: 40px 0 36px; }
+    h1 { gap: 10px; font-size: clamp(2.85rem, 10.8vw, 4.2rem); margin-bottom: 22px; }
+    .hero-tagline { font-size: clamp(1.55rem, 5.8vw, 2rem); max-width: 320px; margin-inline: auto; }
+    .hero-description { font-size: .96rem; margin-bottom: 22px; }
+    .desktop-break { display: none; }
+    .hero-actions { gap: 9px; }
+    .hero-actions .btn { min-width: 0; padding: .7rem .7rem; font-size: .78rem; min-height: 44px; gap: .5rem; white-space: nowrap; }
+    .hero-actions .btn svg { width: 16px; height: 16px; }
+    .hero-tagline em { display: block; }
+    .hero-principles { font-size: .64rem; row-gap: 5px; }
+    .hero-principles span + span::before { padding-inline: 7px; }
   }
 </style>

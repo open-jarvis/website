@@ -29,16 +29,6 @@ const navLinks = [
     </nav>
 
     <div class="topbar-actions">
-      <button id="theme-toggle" class="theme-toggle" type="button" aria-label="Toggle theme" title="Toggle theme">
-        <svg class="icon-moon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-          <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
-        </svg>
-        <svg class="icon-sun" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-          <circle cx="12" cy="12" r="4"></circle>
-          <path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"></path>
-        </svg>
-      </button>
-
       <a href={site.links.github} class="ghbtn" data-repo={site.links.github} target="_blank" rel="noopener noreferrer" aria-label="Star OpenJarvis on GitHub">
         <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
           <path d="M12 0C5.374 0 0 5.373 0 12c0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23A11.509 11.509 0 0 1 12 5.803c1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576C20.566 21.797 24 17.3 24 12c0-6.627-5.373-12-12-12z"></path>
@@ -58,10 +48,7 @@ const navLinks = [
           aria-controls="nav-menu-panel"
         >
           <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" aria-hidden="true">
-            <path d="M3 6.5h18M3 12h18M3 17.5h18"></path>
-            <circle cx="15.5" cy="6.5" r="2.4" fill="currentColor" stroke="none"></circle>
-            <circle cx="8" cy="12" r="2.4" fill="currentColor" stroke="none"></circle>
-            <circle cx="16.5" cy="17.5" r="2.4" fill="currentColor" stroke="none"></circle>
+            <path d="M4 7h16M4 12h16M4 17h16"></path>
           </svg>
         </button>
 
@@ -80,20 +67,6 @@ const navLinks = [
 </header>
 
 <script>
-  const root = document.documentElement;
-  const toggle = document.getElementById('theme-toggle');
-  if (toggle) {
-    toggle.addEventListener('click', () => {
-      const current = root.dataset.theme === 'light' ? 'light' : 'dark';
-      const next = current === 'dark' ? 'light' : 'dark';
-      root.classList.add('theme-anim');
-      root.dataset.theme = next;
-      root.style.colorScheme = next;
-      setTimeout(() => root.classList.remove('theme-anim'), 350);
-      try { localStorage.setItem('theme', next); } catch (e) {}
-    });
-  }
-
   const menuBtn = document.getElementById('nav-menu-toggle');
   const menuPanel = document.getElementById('nav-menu-panel');
   if (menuBtn && menuPanel) {
@@ -153,201 +126,22 @@ const navLinks = [
 </script>
 
 <style>
-  .site-topbar {
-    position: sticky;
-    top: 0;
-    z-index: 90;
-    border-bottom: 1px solid transparent;
-    background: color-mix(in srgb, var(--color-bg) 78%, transparent);
-    backdrop-filter: blur(18px);
-    -webkit-backdrop-filter: blur(18px);
-  }
-  .site-topbar::after {
-    content: '';
-    position: absolute;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    height: 1px;
-    background: linear-gradient(90deg, transparent 4%,
-      color-mix(in srgb, var(--color-holo) 42%, transparent) 50%,
-      transparent 96%);
-  }
-
-  .topbar-inner {
-    display: flex;
-    align-items: center;
-    gap: 1.25rem;
-    height: 62px;
-  }
-
-  .brand-mark {
-    width: 28px;
-    height: 28px;
-    filter: drop-shadow(0 0 8px var(--logo-glow));
-  }
-  .brand-name {
-    font-family: var(--font-display);
-    font-weight: 700;
-    font-size: 1.15rem;
-    letter-spacing: -0.01em;
-    color: var(--color-text);
-  }
-
-  .topbar-nav {
-    display: flex;
-    align-items: center;
-    gap: 0.25rem;
-    margin-left: auto;
-  }
-  .topbar-link {
-    display: inline-flex;
-    align-items: center;
-    min-height: 34px;
-    padding: 0 0.75rem;
-    border: 1px solid transparent;
-    border-radius: var(--radius-md);
-    font-size: 0.9rem;
-    font-weight: 600;
-    color: var(--color-text-secondary);
-    text-decoration: none;
-    transition: color 0.15s ease, background 0.15s ease, border-color 0.15s ease;
-    white-space: nowrap;
-  }
-  .topbar-link:hover {
-    color: var(--color-holo);
-    background: color-mix(in srgb, var(--color-holo) 6%, transparent);
-    border-color: color-mix(in srgb, var(--color-holo) 20%, transparent);
-  }
-
-  .topbar-actions {
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-    flex-shrink: 0;
-  }
-
-  .theme-toggle {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    width: 36px;
-    height: 36px;
-    padding: 0;
-    border: 1px solid var(--color-border);
-    border-radius: var(--radius-md);
-    background: var(--color-surface);
-    color: var(--color-text-secondary);
-    cursor: pointer;
-    transition: color 0.15s ease, border-color 0.15s ease, background 0.15s ease;
-  }
-  .theme-toggle:hover { color: var(--color-text); border-color: var(--color-border-accent); }
-  .theme-toggle:focus-visible { outline: 2px solid var(--color-accent); outline-offset: 2px; }
-
-  .ghbtn {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.45rem;
-    height: 36px;
-    padding: 0 0.85rem;
-    border: 1px solid var(--color-border);
-    border-radius: var(--radius-md);
-    background: var(--color-surface);
-    font-size: 0.875rem;
-    font-weight: 600;
-    color: var(--color-text);
-    text-decoration: none;
-    white-space: nowrap;
-    transition: color 0.15s ease, border-color 0.15s ease, background 0.15s ease;
-  }
-  .ghbtn:hover { color: var(--color-text); border-color: var(--color-border-accent); background: var(--color-surface-strong); }
-  .ghbtn-stars {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.2em;
-    padding-left: 0.5rem;
-    border-left: 1px solid var(--color-border);
-    color: var(--color-text-secondary);
-    font-variant-numeric: tabular-nums;
-  }
-  .ghbtn-stars::before { content: '★'; color: var(--color-signal); font-size: 0.9em; }
-
-  /* Dropdown nav — only present once the inline row is hidden */
-  .menu-wrap {
-    position: relative;
-    display: none;
-  }
-
-  .menu-btn {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    width: 36px;
-    height: 36px;
-    padding: 0;
-    border: 1px solid var(--color-border);
-    border-radius: var(--radius-md);
-    background: var(--color-surface);
-    color: var(--color-text-secondary);
-    cursor: pointer;
-    transition: color 0.15s ease, border-color 0.15s ease, background 0.15s ease;
-  }
-  .menu-btn:hover {
-    color: var(--color-text);
-    border-color: var(--color-border-accent);
-    background: var(--color-surface-strong);
-  }
-  .menu-btn:focus-visible { outline: 2px solid var(--color-accent); outline-offset: 2px; }
-  .menu-btn[aria-expanded='true'] {
-    color: var(--color-holo);
-    border-color: var(--color-border-accent);
-    box-shadow: 0 0 16px var(--glow-holo);
-  }
-
-  .menu-panel {
-    position: absolute;
-    top: calc(100% + 0.5rem);
-    right: 0;
-    z-index: 95;
-    display: flex;
-    flex-direction: column;
-    gap: 0.15rem;
-    min-width: 11rem;
-    padding: 0.4rem;
-    border: 1px solid var(--color-border);
-    border-radius: var(--radius-lg);
-    background: var(--color-surface);
-    box-shadow: 0 18px 44px color-mix(in srgb, var(--color-accent-deep) 55%, transparent),
-                0 0 0 1px color-mix(in srgb, var(--color-holo) 8%, transparent);
-  }
-  /* display:flex above would otherwise defeat the hidden attribute */
-  .menu-panel[hidden] { display: none; }
-
-  .menu-link {
-    padding: 0.6rem 0.7rem;
-    border: 1px solid transparent;
-    border-radius: var(--radius-md);
-    font-size: 0.92rem;
-    font-weight: 600;
-    color: var(--color-text-secondary);
-    text-decoration: none;
-    white-space: nowrap;
-    transition: color 0.15s ease, background 0.15s ease, border-color 0.15s ease;
-  }
-  .menu-link:hover {
-    color: var(--color-holo);
-    background: color-mix(in srgb, var(--color-holo) 6%, transparent);
-    border-color: color-mix(in srgb, var(--color-holo) 20%, transparent);
-  }
-
-  @media (max-width: 860px) {
-    .topbar-nav { display: none; }
-    /* The nav row carried the auto margin, so the actions have to take it over
-       to stay pinned right once it's gone. */
-    .topbar-actions { margin-left: auto; }
-    .menu-wrap { display: block; }
-  }
-  @media (max-width: 760px) {
-    .ghbtn-label { display: none; }
-  }
+  .site-topbar { position: sticky; top: 0; z-index: 90; background: #ffffffed; backdrop-filter: blur(16px); border-bottom: 1px solid var(--color-border); }
+  .topbar-inner { display: flex; align-items: center; gap: 1.5rem; height: 68px; }
+  .brand-mark { width: 32px; height: 32px; }
+  .brand-name { font-size: 1.12rem; font-weight: 600; letter-spacing: -.045em; color: var(--color-text); }
+  .topbar-nav { display: flex; align-items: center; gap: 1.8rem; margin-left: auto; }
+  .topbar-link { font-size: .86rem; color: var(--color-text-secondary); }
+  .topbar-link:hover { color: var(--color-accent); }
+  .topbar-actions { display: flex; align-items: center; gap: .6rem; flex-shrink: 0; }
+  .ghbtn { display: inline-flex; align-items: center; gap: .5rem; min-height: 36px; padding: 0 .7rem; border: 1px solid var(--color-border); border-radius: 5px; color: var(--color-text); font-size: .76rem; }
+  .ghbtn:hover { background: var(--color-bg-alt); color: var(--color-text); }
+  .ghbtn-stars { padding-left: .5rem; border-left: 1px solid var(--color-border); font-variant-numeric: tabular-nums; color: var(--color-text-secondary); }
+  .menu-wrap { position: relative; display: none; }
+  .menu-btn { display: flex; align-items: center; justify-content: center; width: 36px; height: 36px; border: 1px solid var(--color-border); border-radius: 5px; background: transparent; color: var(--color-text); cursor: pointer; }
+  .menu-panel { position: absolute; top: calc(100% + .7rem); right: 0; display: flex; flex-direction: column; gap: .25rem; min-width: 12rem; padding: .5rem; background: var(--color-surface); border: 1px solid var(--color-border); border-radius: var(--radius-md); box-shadow: 0 10px 30px #24344315; }
+  .menu-link { font-size: .9rem; padding: .65rem .8rem; color: var(--color-text); border-radius: 3px; }
+  .menu-link:hover { background: var(--color-bg-alt); color: var(--color-accent); }
+  @media (max-width: 860px) { .topbar-nav { display: none; } .topbar-actions { margin-left: auto; } .menu-wrap { display: block; } }
+  @media (max-width: 480px) { .topbar-inner { height: 65px; gap: 1rem; } .brand-name { font-size: 1.04rem; } .brand-mark { width: 28px; height: 28px; } .ghbtn-label { display: none; } .ghbtn { padding-inline: .55rem; } }
 </style>
